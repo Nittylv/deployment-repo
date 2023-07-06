@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-test"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: nginx
+  namespace: test
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "test.bossladyb.online"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - "test.bossladyb.online"
+    secretName: "test.bossladyb.online"
+
